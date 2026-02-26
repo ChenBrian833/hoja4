@@ -1,5 +1,10 @@
+
+
 import java.util.ArrayList;
 
+/**
+ * ArrayListStack - Implementación de pila usando java.util.ArrayList.
+ */
 public class ArrayListStack<T> extends AbstractStack<T> {
 
     private final ArrayList<T> data;

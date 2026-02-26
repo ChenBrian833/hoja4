@@ -1,3 +1,9 @@
+
+/**
+ * AbstractStack - Clase abstracta genérica para el ADT Pila.
+ * Implementa comportamiento común y deja a las subclases
+ * definir el almacenamiento interno.
+ */
 public abstract class AbstractStack<T> implements IStack<T> {
 
     protected int size;
@@ -16,6 +22,9 @@ public abstract class AbstractStack<T> implements IStack<T> {
         return size;
     }
 
+    /**
+     * Verifica que la pila no esté vacía antes de pop/peek.
+     */
     protected void checkNotEmpty() {
         if (isEmpty()) {
             throw new RuntimeException("Stack underflow: la pila está vacía.");

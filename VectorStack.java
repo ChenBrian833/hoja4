@@ -1,5 +1,10 @@
+
+
 import java.util.Vector;
 
+/**
+ * VectorStack - Implementación de pila usando java.util.Vector.
+ */
 public class VectorStack<T> extends AbstractStack<T> {
 
     private final Vector<T> data;

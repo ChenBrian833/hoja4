@@ -1,3 +1,11 @@
+
+
+import list.IList;
+
+/**
+ * ListStack - Implementación de pila usando un ADT Lista.
+ * La implementación concreta de lista es decidida por ListFactory.
+ */
 public class ListStack<T> extends AbstractStack<T> {
 
     private final IList<T> list;
