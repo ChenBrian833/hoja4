@@ -1,3 +1,14 @@
+
+
+import stack.IStack;
+
+/**
+ * InfixToPostfix - Convierte una expresión infix a postfix
+ * usando el algoritmo de la Hoja 4 (Shunting-yard).
+ *
+ * Soporta: +  -  *  /  ^  y paréntesis ( )
+ * Soporta números multi-dígito separando tokens.
+ */
 public class InfixToPostfix {
 
     private final IStack<String> stack;
@@ -8,6 +19,7 @@ public class InfixToPostfix {
 
     public String convert(String infix) {
         StringBuilder postfix = new StringBuilder();
+        // Tokenize: separa números multi-dígito de operadores
         String[] tokens = tokenize(infix);
 
         for (String token : tokens) {
@@ -18,12 +30,14 @@ public class InfixToPostfix {
                 stack.push(token);
 
             } else if (token.equals(")")) {
+                // Pop hasta encontrar '('
                 while (!stack.isEmpty() && !stack.peek().equals("(")) {
                     postfix.append(stack.pop()).append(" ");
                 }
-                if (!stack.isEmpty()) stack.pop();
+                if (!stack.isEmpty()) stack.pop(); // elimina '('
 
             } else if (isOperator(token)) {
+                // Pop operadores de mayor o igual precedencia
                 while (!stack.isEmpty()
                         && isOperator(stack.peek())
                         && precedence(stack.peek()) >= precedence(token)) {
@@ -33,6 +47,7 @@ public class InfixToPostfix {
             }
         }
 
+        // Vaciar pila restante
         while (!stack.isEmpty()) {
             postfix.append(stack.pop()).append(" ");
         }
@@ -41,6 +56,7 @@ public class InfixToPostfix {
     }
 
     private String[] tokenize(String expr) {
+        // Inserta espacios alrededor de operadores y paréntesis
         String spaced = expr.replaceAll("([+\\-*/^()])", " $1 ");
         return spaced.trim().split("\\s+");
     }

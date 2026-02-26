@@ -1,3 +1,11 @@
+
+
+import stack.IStack;
+
+/**
+ * PostfixEvaluator - Evalúa una expresión en notación postfix.
+ * Usa un IStack<Double> provisto por StackFactory.
+ */
 public class PostfixEvaluator {
 
     private final IStack<Double> stack;
