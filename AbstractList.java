@@ -1,3 +1,8 @@
+
+/**
+ * AbstractList - Clase abstracta genérica para el ADT Lista.
+ * Provee comportamiento común y deja el almacenamiento a subclases.
+ */
 public abstract class AbstractList<T> implements IList<T> {
 
     protected int size;

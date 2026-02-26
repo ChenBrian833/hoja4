@@ -1,3 +1,7 @@
+
+/**
+ * SinglyLinkedList - Lista simplemente encadenada.
+ */
 public class SinglyLinkedList<T> extends AbstractList<T> {
 
     private static class Node<T> {

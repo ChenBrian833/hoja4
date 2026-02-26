@@ -1,3 +1,7 @@
+
+/**
+ * DoublyLinkedList - Lista doblemente encadenada.
+ */
 public class DoublyLinkedList<T> extends AbstractList<T> {
 
     private static class Node<T> {
