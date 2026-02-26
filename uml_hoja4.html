@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>UML – Hoja de Trabajo #4 | UVG</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #ECEFF1; padding: 24px; }
+
+  .page-title {
+    text-align: center; margin-bottom: 24px;
+  }
+  .page-title h1 { font-size: 22px; color: #1A237E; }
+  .page-title h2 { font-size: 14px; color: #546E7A; font-weight: normal; margin-top: 4px; }
+
+  .section { margin-bottom: 32px; }
+  .section-label {
+    font-size: 13px; font-weight: bold; color: #37474F;
+    margin-bottom: 8px; padding-left: 4px;
+    border-left: 4px solid #1565C0; padding-left: 10px;
+  }
+
+  svg { display: block; background: white; border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.13); width: 100%; }
+
+  .legend { display: flex; gap: 20px; flex-wrap: wrap;
+            margin-top: 10px; padding: 10px 14px;
+            background: white; border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1); font-size: 12px; }
+  .leg-item { display: flex; align-items: center; gap: 6px; }
+  .leg-dot { width: 14px; height: 14px; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>Hoja de Trabajo #4 — Pilas, Listas y Patrones de Diseño | UVG</h1>
+  <h2>Diagramas UML: Secuencia (Evaluación Postfix) + Clases (Factory Pattern)</h2>
+</div>
+
+<!-- ============================================================
+     DIAGRAM 1 — SEQUENCE: Factory + Infix→Postfix + Evaluación
+     ============================================================ -->
+<div class="section">
+<div class="section-label">Diagrama 1: Secuencia — Flujo completo del programa (Factory → Conversión → Evaluación)</div>
+<svg viewBox="0 0 1060 780" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="s1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="#1565C0"/>
+  </marker>
+  <marker id="s1r" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="#2E7D32"/>
+  </marker>
+  <marker id="s1d" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="#AD1457"/>
+  </marker>
+</defs>
+
+<!-- ── Participant boxes ── -->
+<!-- :Main -->
+<rect x="20"  y="12" width="90"  height="38" rx="4" fill="#1565C0" stroke="#0D47A1" stroke-width="1.5"/>
+<text x="65"  y="36" text-anchor="middle" fill="white" font-size="12" font-weight="bold">:Main</text>
+
+<!-- :StackFactory -->
+<rect x="175" y="12" width="120" height="38" rx="4" fill="#AD1457" stroke="#880E4F" stroke-width="1.5"/>
+<text x="235" y="31" text-anchor="middle" fill="white" font-size="11" font-weight="bold">:StackFactory</text>
+<text x="235" y="44" text-anchor="middle" fill="#FFB3C6" font-size="9">«Factory»</text>
+
+<!-- :ListFactory -->
+<rect x="360" y="12" width="120" height="38" rx="4" fill="#6A1B9A" stroke="#4A148C" stroke-width="1.5"/>
+<text x="420" y="31" text-anchor="middle" fill="white" font-size="11" font-weight="bold">:ListFactory</text>
+<text x="420" y="44" text-anchor="middle" fill="#E1BEE7" font-size="9">«Factory»</text>
+
+<!-- IStack / concrete stack -->
+<rect x="545" y="12" width="120" height="38" rx="4" fill="#00695C" stroke="#004D40" stroke-width="1.5"/>
+<text x="605" y="31" text-anchor="middle" fill="white" font-size="11" font-weight="bold">«IStack»</text>
+<text x="605" y="44" text-anchor="middle" fill="#B2DFDB" font-size="9">ArrayListStack/VectorStack/ListStack</text>
+
+<!-- :InfixToPostfix -->
+<rect x="730" y="12" width="130" height="38" rx="4" fill="#E65100" stroke="#BF360C" stroke-width="1.5"/>
+<text x="795" y="31" text-anchor="middle" fill="white" font-size="11" font-weight="bold">:InfixToPostfix</text>
+<text x="795" y="44" text-anchor="middle" fill="#FFE0B2" font-size="9">conversor infix→postfix</text>
+
+<!-- :PostfixEvaluator -->
+<rect x="925" y="12" width="120" height="38" rx="4" fill="#283593" stroke="#1A237E" stroke-width="1.5"/>
+<text x="985" y="31" text-anchor="middle" fill="white" font-size="11" font-weight="bold">:PostfixEvaluator</text>
+<text x="985" y="44" text-anchor="middle" fill="#C5CAE9" font-size="9">evaluador postfix</text>
+
+<!-- Lifelines -->
+<line x1="65"  y1="50" x2="65"  y2="775" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+<line x1="235" y1="50" x2="235" y2="775" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+<line x1="420" y1="50" x2="420" y2="775" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+<line x1="605" y1="50" x2="605" y2="775" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+<line x1="795" y1="50" x2="795" y2="775" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+<line x1="985" y1="50" x2="985" y2="775" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+<!-- Activation bars -->
+<rect x="59"  y="65" width="12" height="690" fill="#BBDEFB" stroke="#90A4AE" stroke-width="1"/>
+<rect x="229" y="90" width="12" height="160" fill="#F8BBD0" stroke="#90A4AE" stroke-width="1"/>
+<rect x="414" y="140" width="12" height="75"  fill="#E1BEE7" stroke="#90A4AE" stroke-width="1"/>
+<rect x="599" y="90" width="12" height="590" fill="#B2DFDB" stroke="#90A4AE" stroke-width="1"/>
+<rect x="789" y="440" width="12" height="200" fill="#FFE0B2" stroke="#90A4AE" stroke-width="1"/>
+<rect x="979" y="640" width="12" height="90"  fill="#C5CAE9" stroke="#90A4AE" stroke-width="1"/>
+
+<!-- ─── FASE 1: leer archivo ─── -->
+<rect x="30" y="68" width="730" height="18" rx="3" fill="#E8F5E9" opacity="0.6"/>
+<text x="400" y="81" text-anchor="middle" fill="#2E7D32" font-size="10" font-weight="bold">FASE 1 — Lectura de datos.txt</text>
+
+<line x1="71" y1="92" x2="790" y2="92" stroke="#1565C0" stroke-width="1.5" marker-end="url(#s1)"/>
+<text x="430" y="87" text-anchor="middle" fill="#1565C0" font-size="11">readFromFile("datos.txt") → infix = "(10+20)*9"</text>
+<line x1="790" y1="108" x2="71" y2="108" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="430" y="103" text-anchor="middle" fill="#2E7D32" font-size="11">String infix</text>
+
+<!-- ─── FASE 2: StackFactory ─── -->
+<rect x="30" y="122" width="730" height="18" rx="3" fill="#FCE4EC" opacity="0.6"/>
+<text x="380" y="135" text-anchor="middle" fill="#880E4F" font-size="10" font-weight="bold">FASE 2 — Patrón Factory: selección de pila (usuario elige "list" + "doubly")</text>
+
+<!-- Main → StackFactory: createStack -->
+<line x1="71" y1="148" x2="222" y2="148" stroke="#1565C0" stroke-width="1.5" marker-end="url(#s1)"/>
+<text x="145" y="143" text-anchor="middle" fill="#1565C0" font-size="11">createStack("list", "doubly")</text>
+
+<!-- StackFactory → ListFactory: createList -->
+<rect x="225" y="152" width="12" height="70" fill="#F8BBD0" stroke="#90A4AE" stroke-width="1"/>
+<line x1="241" y1="162" x2="407" y2="162" stroke="#AD1457" stroke-width="1.5" marker-end="url(#s1d)"/>
+<text x="324" y="157" text-anchor="middle" fill="#AD1457" font-size="11">createList("doubly")</text>
+
+<!-- ListFactory → new DoublyLinkedList + new ListStack -->
+<rect x="413" y="167" width="12" height="45" fill="#E1BEE7" stroke="#90A4AE" stroke-width="1"/>
+<line x1="425" y1="175" x2="592" y2="175" stroke="#6A1B9A" stroke-width="1.5" marker-end="url(#s1d)"/>
+<text x="508" y="170" text-anchor="middle" fill="#6A1B9A" font-size="11">«create» new DoublyLinkedList()</text>
+<line x1="592" y1="190" x2="425" y2="190" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="508" y="185" text-anchor="middle" fill="#2E7D32" font-size="11">:DoublyLinkedList</text>
+
+<!-- ListFactory returns IList -->
+<line x1="407" y1="208" x2="241" y2="208" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="324" y="203" text-anchor="middle" fill="#2E7D32" font-size="11">IList (DoublyLinkedList)</text>
+
+<!-- StackFactory creates ListStack -->
+<line x1="241" y1="222" x2="592" y2="222" stroke="#AD1457" stroke-width="1.5" marker-end="url(#s1d)"/>
+<text x="416" y="217" text-anchor="middle" fill="#AD1457" font-size="11">«create» new ListStack(list)</text>
+<line x1="592" y1="238" x2="241" y2="238" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="416" y="233" text-anchor="middle" fill="#2E7D32" font-size="11">:ListStack</text>
+
+<!-- Return to Main: opStack -->
+<line x1="222" y1="248" x2="71" y2="248" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="145" y="243" text-anchor="middle" fill="#2E7D32" font-size="11">opStack : IStack&lt;String&gt;</text>
+
+<!-- Segunda llamada para evalStack -->
+<line x1="71" y1="266" x2="222" y2="266" stroke="#1565C0" stroke-width="1.5" marker-end="url(#s1)"/>
+<text x="145" y="261" text-anchor="middle" fill="#1565C0" font-size="11">createStack("list","doubly")  → evalStack</text>
+<line x1="222" y1="282" x2="71" y2="282" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="145" y="278" text-anchor="middle" fill="#2E7D32" font-size="11">evalStack : IStack&lt;Double&gt;</text>
+
+<!-- ─── FASE 3: InfixToPostfix ─── -->
+<rect x="30" y="300" width="860" height="18" rx="3" fill="#FFF3E0" opacity="0.7"/>
+<text x="460" y="313" text-anchor="middle" fill="#E65100" font-size="10" font-weight="bold">FASE 3 — Conversión Infix → Postfix: "(10+20)*9"  →  "10 20 + 9 *"</text>
+
+<!-- Main creates InfixToPostfix -->
+<line x1="71" y1="330" x2="782" y2="330" stroke="#1565C0" stroke-width="1.5" marker-end="url(#s1)"/>
+<text x="426" y="325" text-anchor="middle" fill="#1565C0" font-size="11">new InfixToPostfix(opStack)</text>
+
+<!-- Main → converter.convert() -->
+<line x1="71" y1="350" x2="782" y2="350" stroke="#1565C0" stroke-width="1.5" marker-end="url(#s1)"/>
+<text x="426" y="345" text-anchor="middle" fill="#1565C0" font-size="11">convert("(10+20)*9")</text>
+
+<!-- Loop fragment -->
+<rect x="660" y="362" width="310" height="255" rx="4" fill="none" stroke="#7986CB" stroke-width="1.5"/>
+<rect x="660" y="362" width="48" height="18" rx="2" fill="#7986CB"/>
+<text x="684" y="374" text-anchor="middle" fill="white" font-size="10" font-weight="bold">loop</text>
+<text x="820" y="374" text-anchor="middle" fill="#5C6BC0" font-size="9">[por cada token de la expresión]</text>
+
+<!-- Token ( -->
+<line x1="801" y1="385" x2="606" y2="385" stroke="#E65100" stroke-width="1.5" marker-end="url(#s1d)"/>
+<text x="700" y="380" text-anchor="middle" fill="#E65100" font-size="10">push("(")  ← token "("</text>
+<!-- Token 10 -->
+<text x="820" y="403" text-anchor="middle" fill="#37474F" font-size="10">token "10" → operando</text>
+<!-- Token + -->
+<line x1="801" y1="415" x2="606" y2="415" stroke="#E65100" stroke-width="1.5" marker-end="url(#s1d)"/>
+<text x="700" y="410" text-anchor="middle" fill="#E65100" font-size="10">push("+")  ← token "+"</text>
+<!-- Token 20 -->
+<text x="820" y="433" text-anchor="middle" fill="#37474F" font-size="10">token "20" → operando</text>
+<!-- Token ) -->
+<line x1="801" y1="445" x2="606" y2="445" stroke="#E65100" stroke-width="1.5" marker-end="url(#s1d)"/>
+<line x1="606" y1="460" x2="801" y2="460" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="700" y="440" text-anchor="middle" fill="#E65100" font-size="10">pop() hasta "(" → "+"; pop "("</text>
+<text x="700" y="455" text-anchor="middle" fill="#2E7D32" font-size="10">output: "10 20 +"</text>
+<!-- Token * -->
+<line x1="801" y1="473" x2="606" y2="473" stroke="#E65100" stroke-width="1.5" marker-end="url(#s1d)"/>
+<text x="700" y="468" text-anchor="middle" fill="#E65100" font-size="10">push("*")  ← token "*"</text>
+<!-- Token 9 -->
+<text x="820" y="491" text-anchor="middle" fill="#37474F" font-size="10">token "9" → operando</text>
+<!-- Vaciar pila -->
+<line x1="801" y1="502" x2="606" y2="502" stroke="#E65100" stroke-width="1.5" marker-end="url(#s1d)"/>
+<line x1="606" y1="517" x2="801" y2="517" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="700" y="497" text-anchor="middle" fill="#E65100" font-size="10">vaciar pila → pop "*"</text>
+<text x="700" y="512" text-anchor="middle" fill="#2E7D32" font-size="10">output: "10 20 + 9 *"</text>
+<!-- End loop -->
+
+<!-- Return postfix string -->
+<line x1="782" y1="630" x2="71" y2="630" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="426" y="625" text-anchor="middle" fill="#2E7D32" font-size="11">postfix = "10 20 + 9 *"</text>
+
+<!-- ─── FASE 4: Evaluación Postfix ─── -->
+<rect x="30" y="645" width="1010" height="18" rx="3" fill="#E8EAF6" opacity="0.7"/>
+<text x="530" y="658" text-anchor="middle" fill="#283593" font-size="10" font-weight="bold">FASE 4 — Evaluación Postfix: "10 20 + 9 *"  →  270.0</text>
+
+<!-- Main → PostfixEvaluator create + evaluate -->
+<line x1="71" y1="672" x2="972" y2="672" stroke="#1565C0" stroke-width="1.5" marker-end="url(#s1)"/>
+<text x="520" y="667" text-anchor="middle" fill="#1565C0" font-size="11">new PostfixEvaluator(evalStack)</text>
+<line x1="71" y1="692" x2="972" y2="692" stroke="#1565C0" stroke-width="1.5" marker-end="url(#s1)"/>
+<text x="520" y="687" text-anchor="middle" fill="#1565C0" font-size="11">evaluate("10 20 + 9 *")</text>
+
+<!-- evalStack ops inside PostfixEvaluator -->
+<line x1="981" y1="705" x2="612" y2="705" stroke="#283593" stroke-width="1.5" marker-end="url(#s1d)"/>
+<text x="796" y="700" text-anchor="middle" fill="#283593" font-size="10">push(10), push(20) → pop pop → push(30) → push(9) → pop pop → push(270)</text>
+
+<!-- Return 270 -->
+<line x1="972" y1="725" x2="71" y2="725" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#s1r)"/>
+<text x="520" y="720" text-anchor="middle" fill="#2E7D32" font-size="11">resultado = 270.0</text>
+
+<!-- Print -->
+<text x="200" y="748" fill="#546E7A" font-size="11">System.out → "Resultado: 270.00"</text>
+
+</svg>
+</div>
+
+<!-- ============================================================
+     DIAGRAM 2 — SEQUENCE: Evaluación Postfix detallada (entregable 1)
+     ============================================================ -->
+<div class="section">
+<div class="section-label">Diagrama 2: Secuencia — Evaluación Postfix detallada token a token (entregable requerido)</div>
+<svg viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="d2a" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="#1565C0"/></marker>
+  <marker id="d2r" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="#2E7D32"/></marker>
+  <marker id="d2e" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="#E65100"/></marker>
+</defs>
+
+<!-- Participants -->
+<rect x="20"  y="10" width="90"  height="38" rx="4" fill="#1565C0" stroke="#0D47A1" stroke-width="1.5"/>
+<text x="65"  y="34" text-anchor="middle" fill="white" font-size="12" font-weight="bold">:Main</text>
+
+<rect x="190" y="10" width="140" height="38" rx="4" fill="#283593" stroke="#1A237E" stroke-width="1.5"/>
+<text x="260" y="29" text-anchor="middle" fill="white" font-size="12" font-weight="bold">:PostfixEvaluator</text>
+<text x="260" y="43" text-anchor="middle" fill="#C5CAE9" font-size="9">usa evalStack : IStack&lt;Double&gt;</text>
+
+<rect x="410" y="10" width="120" height="38" rx="4" fill="#00695C" stroke="#004D40" stroke-width="1.5"/>
+<text x="470" y="29" text-anchor="middle" fill="white" font-size="12" font-weight="bold">evalStack</text>
+<text x="470" y="43" text-anchor="middle" fill="#B2DFDB" font-size="9">«IStack&lt;Double&gt;»</text>
+
+<rect x="600" y="10" width="200" height="38" rx="4" fill="#37474F" stroke="#263238" stroke-width="1.5"/>
+<text x="700" y="29" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Estado de la pila</text>
+<text x="700" y="43" text-anchor="middle" fill="#CFD8DC" font-size="9">(top → base)</text>
+
+<!-- Lifelines -->
+<line x1="65"  y1="48" x2="65"  y2="510" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+<line x1="260" y1="48" x2="260" y2="510" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+<line x1="470" y1="48" x2="470" y2="510" stroke="#90A4AE" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+<!-- Activation bars -->
+<rect x="59"  y="60" width="12" height="430" fill="#BBDEFB" stroke="#90A4AE" stroke-width="1"/>
+<rect x="254" y="75" width="12" height="400" fill="#C5CAE9" stroke="#90A4AE" stroke-width="1"/>
+<rect x="464" y="75" width="12" height="400" fill="#B2DFDB" stroke="#90A4AE" stroke-width="1"/>
+
+<!-- Call evaluate -->
+<line x1="71" y1="72" x2="247" y2="72" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2a)"/>
+<text x="158" y="67" text-anchor="middle" fill="#1565C0" font-size="11">evaluate("10 20 + 9 *")</text>
+
+<!-- Loop frame -->
+<rect x="222" y="85" width="275" height="350" rx="3" fill="none" stroke="#7986CB" stroke-width="1.5"/>
+<rect x="222" y="85" width="48" height="18" rx="2" fill="#7986CB"/>
+<text x="246" y="97" text-anchor="middle" fill="white" font-size="10" font-weight="bold">loop</font></text>
+<text x="380" y="97" text-anchor="middle" fill="#5C6BC0" font-size="9">[para cada token]</text>
+
+<!-- token "10" -->
+<text x="340" y="115" text-anchor="middle" fill="#37474F" font-size="10" font-style="italic">token = "10"  →  operando</text>
+<line x1="266" y1="122" x2="457" y2="122" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2a)"/>
+<text x="360" y="117" text-anchor="middle" fill="transparent" font-size="1"> </text>
+<text x="362" y="134" text-anchor="middle" fill="#1565C0" font-size="11">push(10.0)</text>
+<rect x="600" y="108" width="200" height="24" rx="3" fill="#E8F5E9" stroke="#A5D6A7"/>
+<text x="700" y="124" text-anchor="middle" fill="#1B5E20" font-size="11">[10.0]</text>
+
+<!-- token "20" -->
+<text x="340" y="153" text-anchor="middle" fill="#37474F" font-size="10" font-style="italic">token = "20"  →  operando</text>
+<line x1="266" y1="160" x2="457" y2="160" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2a)"/>
+<text x="362" y="172" text-anchor="middle" fill="#1565C0" font-size="11">push(20.0)</text>
+<rect x="600" y="148" width="200" height="24" rx="3" fill="#E8F5E9" stroke="#A5D6A7"/>
+<text x="700" y="164" text-anchor="middle" fill="#1B5E20" font-size="11">[20.0 | 10.0]</text>
+
+<!-- token "+" -->
+<text x="340" y="195" text-anchor="middle" fill="#37474F" font-size="10" font-style="italic">token = "+"  →  operador</text>
+<line x1="266" y1="204" x2="457" y2="204" stroke="#E65100" stroke-width="1.5" marker-end="url(#d2a)"/>
+<line x1="457" y1="218" x2="266" y2="218" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d2r)"/>
+<text x="360" y="199" text-anchor="middle" fill="#E65100" font-size="11">b = pop() → 20.0</text>
+<line x1="266" y1="232" x2="457" y2="232" stroke="#E65100" stroke-width="1.5" marker-end="url(#d2a)"/>
+<line x1="457" y1="246" x2="266" y2="246" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d2r)"/>
+<text x="360" y="228" text-anchor="middle" fill="#E65100" font-size="11">a = pop() → 10.0</text>
+<text x="340" y="263" text-anchor="middle" fill="#37474F" font-size="9" font-style="italic">applyOperator("+", 10.0, 20.0) = 30.0</text>
+<line x1="266" y1="270" x2="457" y2="270" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2a)"/>
+<text x="360" y="265" text-anchor="middle" fill="#1565C0" font-size="11">push(30.0)</text>
+<rect x="600" y="255" width="200" height="24" rx="3" fill="#E8F5E9" stroke="#A5D6A7"/>
+<text x="700" y="271" text-anchor="middle" fill="#1B5E20" font-size="11">[30.0]</text>
+
+<!-- token "9" -->
+<text x="340" y="295" text-anchor="middle" fill="#37474F" font-size="10" font-style="italic">token = "9"  →  operando</text>
+<line x1="266" y1="302" x2="457" y2="302" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2a)"/>
+<text x="362" y="314" text-anchor="middle" fill="#1565C0" font-size="11">push(9.0)</text>
+<rect x="600" y="295" width="200" height="24" rx="3" fill="#E8F5E9" stroke="#A5D6A7"/>
+<text x="700" y="311" text-anchor="middle" fill="#1B5E20" font-size="11">[9.0 | 30.0]</text>
+
+<!-- token "*" -->
+<text x="340" y="333" text-anchor="middle" fill="#37474F" font-size="10" font-style="italic">token = "*"  →  operador</text>
+<line x1="266" y1="342" x2="457" y2="342" stroke="#E65100" stroke-width="1.5" marker-end="url(#d2a)"/>
+<line x1="457" y1="356" x2="266" y2="356" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d2r)"/>
+<text x="360" y="337" text-anchor="middle" fill="#E65100" font-size="11">b = pop() → 9.0</text>
+<line x1="266" y1="370" x2="457" y2="370" stroke="#E65100" stroke-width="1.5" marker-end="url(#d2a)"/>
+<line x1="457" y1="384" x2="266" y2="384" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d2r)"/>
+<text x="360" y="366" text-anchor="middle" fill="#E65100" font-size="11">a = pop() → 30.0</text>
+<text x="340" y="402" text-anchor="middle" fill="#37474F" font-size="9" font-style="italic">applyOperator("*", 30.0, 9.0) = 270.0</text>
+<line x1="266" y1="410" x2="457" y2="410" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2a)"/>
+<text x="362" y="422" text-anchor="middle" fill="#1565C0" font-size="11">push(270.0)</text>
+<rect x="600" y="400" width="200" height="24" rx="3" fill="#E8F5E9" stroke="#A5D6A7"/>
+<text x="700" y="416" text-anchor="middle" fill="#1B5E20" font-size="11">[270.0]   ← resultado</text>
+
+<!-- Final pop -->
+<line x1="266" y1="450" x2="457" y2="450" stroke="#E65100" stroke-width="1.5" marker-end="url(#d2a)"/>
+<line x1="457" y1="464" x2="266" y2="464" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d2r)"/>
+<text x="360" y="445" text-anchor="middle" fill="#E65100" font-size="11">result = pop() → 270.0</text>
+
+<!-- Return to Main -->
+<line x1="247" y1="490" x2="71" y2="490" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d2r)"/>
+<text x="158" y="485" text-anchor="middle" fill="#2E7D32" font-size="11">270.0</text>
+
+</svg>
+</div>
+
+<!-- ============================================================
+     DIAGRAM 3 — CLASS DIAGRAM
+     ============================================================ -->
+<div class="section">
+<div class="section-label">Diagrama 3: Clases — Jerarquía ADT Stack + ADT List + Patrón Factory</div>
+<svg viewBox="0 0 1040 560" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- open triangle = implements/extends -->
+  <marker id="c1impl" markerWidth="14" markerHeight="10" refX="13" refY="5" orient="auto">
+    <polygon points="0 0,14 5,0 10" fill="white" stroke="#1565C0" stroke-width="1.5"/>
+  </marker>
+  <marker id="c1ext" markerWidth="14" markerHeight="10" refX="13" refY="5" orient="auto">
+    <polygon points="0 0,14 5,0 10" fill="white" stroke="#2E7D32" stroke-width="1.5"/>
+  </marker>
+  <marker id="c1extl" markerWidth="14" markerHeight="10" refX="13" refY="5" orient="auto">
+    <polygon points="0 0,14 5,0 10" fill="white" stroke="#6A1B9A" stroke-width="1.5"/>
+  </marker>
+  <marker id="c1dep" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="white" stroke="#AD1457" stroke-width="1.5"/>
+  </marker>
+  <marker id="c1uses" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0,10 3.5,0 7" fill="white" stroke="#546E7A" stroke-width="1.5"/>
+  </marker>
+</defs>
+
+<!-- ══════════ STACK ADT COLUMN ══════════ -->
+<!-- IStack interface -->
+<rect x="340" y="10" width="170" height="85" rx="4" fill="#E3F2FD" stroke="#1565C0" stroke-width="2"/>
+<rect x="340" y="10" width="170" height="22" rx="4" fill="#1565C0"/>
+<text x="425" y="25" text-anchor="middle" fill="white" font-size="10">«interface»</text>
+<text x="425" y="38" text-anchor="middle" fill="#1565C0" font-size="13" font-weight="bold">IStack&lt;T&gt;</text>
+<line x1="340" y1="46" x2="510" y2="46" stroke="#1565C0" stroke-width="1"/>
+<text x="350" y="58" fill="#37474F" font-size="10">+ push(item: T): void</text>
+<text x="350" y="70" fill="#37474F" font-size="10">+ pop(): T</text>
+<text x="350" y="82" fill="#37474F" font-size="10">+ peek(): T  |  + isEmpty(): boolean  |  + size(): int</text>
+
+<!-- AbstractStack -->
+<rect x="330" y="140" width="190" height="80" rx="4" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+<rect x="330" y="140" width="190" height="22" rx="4" fill="#2E7D32"/>
+<text x="425" y="155" text-anchor="middle" fill="white" font-size="10">«abstract»</text>
+<text x="425" y="168" text-anchor="middle" fill="#1B5E20" font-size="12" font-weight="bold">AbstractStack&lt;T&gt;</text>
+<line x1="330" y1="174" x2="520" y2="174" stroke="#2E7D32" stroke-width="1"/>
+<text x="340" y="187" fill="#37474F" font-size="10"># size: int</text>
+<text x="340" y="200" fill="#37474F" font-size="10">+ isEmpty(): boolean  |  + size(): int</text>
+<text x="340" y="212" fill="#37474F" font-size="10"># checkNotEmpty(): void</text>
+
+<!-- AbstractStack implements IStack -->
+<line x1="425" y1="140" x2="425" y2="95" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#c1impl)"/>
+<text x="440" y="120" fill="#1565C0" font-size="9">«implements»</text>
+
+<!-- ArrayListStack -->
+<rect x="80"  y="290" width="155" height="68" rx="4" fill="#C8E6C9" stroke="#2E7D32" stroke-width="2"/>
+<rect x="80"  y="290" width="155" height="22" rx="4" fill="#388E3C"/>
+<text x="157" y="305" text-anchor="middle" fill="white" font-size="11" font-weight="bold">ArrayListStack&lt;T&gt;</text>
+<line x1="80" y1="312" x2="235" y2="312" stroke="#2E7D32" stroke-width="1"/>
+<text x="90" y="324" fill="#37474F" font-size="10">- data: ArrayList&lt;T&gt;</text>
+<text x="90" y="336" fill="#37474F" font-size="10">+ push / pop / peek</text>
+<text x="90" y="348" fill="#37474F" font-size="10">  (override)</text>
+
+<!-- VectorStack -->
+<rect x="330" y="290" width="140" height="68" rx="4" fill="#C8E6C9" stroke="#2E7D32" stroke-width="2"/>
+<rect x="330" y="290" width="140" height="22" rx="4" fill="#388E3C"/>
+<text x="400" y="305" text-anchor="middle" fill="white" font-size="11" font-weight="bold">VectorStack&lt;T&gt;</text>
+<line x1="330" y1="312" x2="470" y2="312" stroke="#2E7D32" stroke-width="1"/>
+<text x="340" y="324" fill="#37474F" font-size="10">- data: Vector&lt;T&gt;</text>
+<text x="340" y="336" fill="#37474F" font-size="10">+ push / pop / peek</text>
+<text x="340" y="348" fill="#37474F" font-size="10">  (override)</text>
+
+<!-- ListStack -->
+<rect x="555" y="290" width="140" height="68" rx="4" fill="#C8E6C9" stroke="#2E7D32" stroke-width="2"/>
+<rect x="555" y="290" width="140" height="22" rx="4" fill="#388E3C"/>
+<text x="625" y="305" text-anchor="middle" fill="white" font-size="11" font-weight="bold">ListStack&lt;T&gt;</text>
+<line x1="555" y1="312" x2="695" y2="312" stroke="#2E7D32" stroke-width="1"/>
+<text x="565" y="324" fill="#37474F" font-size="10">- list: IList&lt;T&gt;</text>
+<text x="565" y="336" fill="#37474F" font-size="10">+ push / pop / peek</text>
+<text x="565" y="348" fill="#37474F" font-size="10">  (override)</text>
+
+<!-- extends AbstractStack arrows -->
+<line x1="157" y1="290" x2="370" y2="220" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#c1ext)"/>
+<line x1="400" y1="290" x2="415" y2="220" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#c1ext)"/>
+<line x1="625" y1="290" x2="470" y2="220" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#c1ext)"/>
+<text x="262" y="262" fill="#2E7D32" font-size="9" transform="rotate(-18,262,262)">«extends»</text>
+<text x="480" y="255" fill="#2E7D32" font-size="9">«extends»</text>
+<text x="545" y="262" fill="#2E7D32" font-size="9" transform="rotate(18,545,262)">«extends»</text>
+
+<!-- ══════════ LIST ADT COLUMN ══════════ -->
+<!-- IList interface -->
+<rect x="730" y="280" width="170" height="85" rx="4" fill="#EDE7F6" stroke="#6A1B9A" stroke-width="2"/>
+<rect x="730" y="280" width="170" height="22" rx="4" fill="#6A1B9A"/>
+<text x="815" y="295" text-anchor="middle" fill="white" font-size="10">«interface»</text>
+<text x="815" y="309" text-anchor="middle" fill="#4A148C" font-size="13" font-weight="bold">IList&lt;T&gt;</text>
+<line x1="730" y1="312" x2="900" y2="312" stroke="#6A1B9A" stroke-width="1"/>
+<text x="740" y="325" fill="#37474F" font-size="10">+ addFirst(item: T): void</text>
+<text x="740" y="337" fill="#37474F" font-size="10">+ removeFirst(): T  |  + getFirst(): T</text>
+<text x="740" y="349" fill="#37474F" font-size="10">+ isEmpty(): boolean  |  + size(): int</text>
+
+<!-- AbstractList -->
+<rect x="720" y="400" width="185" height="75" rx="4" fill="#F3E5F5" stroke="#6A1B9A" stroke-width="2"/>
+<rect x="720" y="400" width="185" height="22" rx="4" fill="#7B1FA2"/>
+<text x="812" y="415" text-anchor="middle" fill="white" font-size="10">«abstract»</text>
+<text x="812" y="428" text-anchor="middle" fill="#4A148C" font-size="12" font-weight="bold">AbstractList&lt;T&gt;</text>
+<line x1="720" y1="434" x2="905" y2="434" stroke="#6A1B9A" stroke-width="1"/>
+<text x="730" y="447" fill="#37474F" font-size="10"># size: int</text>
+<text x="730" y="459" fill="#37474F" font-size="10">+ isEmpty(): boolean  |  + size(): int</text>
+<text x="730" y="471" fill="#37474F" font-size="10"># checkNotEmpty(): void</text>
+
+<!-- AbstractList implements IList -->
+<line x1="812" y1="400" x2="815" y2="365" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#c1extl)"/>
+<text x="825" y="385" fill="#6A1B9A" font-size="9">«implements»</text>
+
+<!-- SinglyLinkedList -->
+<rect x="620" y="495" width="155" height="58" rx="4" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="2"/>
+<rect x="620" y="495" width="155" height="20" rx="4" fill="#8E24AA"/>
+<text x="697" y="509" text-anchor="middle" fill="white" font-size="10" font-weight="bold">SinglyLinkedList&lt;T&gt;</text>
+<line x1="620" y1="515" x2="775" y2="515" stroke="#6A1B9A" stroke-width="1"/>
+<text x="630" y="527" fill="#37474F" font-size="10">- head: Node&lt;T&gt;  - size: int</text>
+<text x="630" y="539" fill="#37474F" font-size="10">+ addFirst/removeFirst/getFirst</text>
+
+<!-- DoublyLinkedList -->
+<rect x="800" y="495" width="155" height="58" rx="4" fill="#E1BEE7" stroke="#6A1B9A" stroke-width="2"/>
+<rect x="800" y="495" width="155" height="20" rx="4" fill="#8E24AA"/>
+<text x="877" y="509" text-anchor="middle" fill="white" font-size="10" font-weight="bold">DoublyLinkedList&lt;T&gt;</text>
+<line x1="800" y1="515" x2="955" y2="515" stroke="#6A1B9A" stroke-width="1"/>
+<text x="810" y="527" fill="#37474F" font-size="10">- head: Node&lt;T&gt;  - size: int</text>
+<text x="810" y="539" fill="#37474F" font-size="10">+ addFirst/removeFirst/getFirst</text>
+
+<!-- extends AbstractList -->
+<line x1="697" y1="495" x2="775" y2="475" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#c1extl)"/>
+<line x1="877" y1="495" x2="845" y2="475" stroke="#6A1B9A" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#c1extl)"/>
+<text x="730" y="490" fill="#6A1B9A" font-size="9">«extends»</text>
+<text x="855" y="490" fill="#6A1B9A" font-size="9">«extends»</text>
+
+<!-- ListStack uses IList -->
+<line x1="695" y1="325" x2="730" y2="310" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#c1uses)"/>
+<text x="715" y="316" fill="#546E7A" font-size="9">«uses»</text>
+
+<!-- ══════════ FACTORY COLUMN ══════════ -->
+<!-- StackFactory -->
+<rect x="10" y="140" width="160" height="68" rx="4" fill="#FCE4EC" stroke="#AD1457" stroke-width="2"/>
+<rect x="10" y="140" width="160" height="22" rx="4" fill="#AD1457"/>
+<text x="90" y="155" text-anchor="middle" fill="white" font-size="11" font-weight="bold">StackFactory</text>
+<text x="90" y="167" text-anchor="middle" fill="#FCE4EC" font-size="9">«Factory Pattern»</text>
+<line x1="10" y1="168" x2="170" y2="168" stroke="#AD1457" stroke-width="1"/>
+<text x="20" y="181" fill="#37474F" font-size="10">+ createStack(stackType, listType)</text>
+<text x="20" y="193" fill="#37474F" font-size="10">     : IStack&lt;T&gt;</text>
+
+<!-- ListFactory -->
+<rect x="10" y="280" width="155" height="65" rx="4" fill="#FCE4EC" stroke="#AD1457" stroke-width="2"/>
+<rect x="10" y="280" width="155" height="22" rx="4" fill="#AD1457"/>
+<text x="87" y="295" text-anchor="middle" fill="white" font-size="11" font-weight="bold">ListFactory</text>
+<text x="87" y="307" text-anchor="middle" fill="#FCE4EC" font-size="9">«Factory Pattern»</text>
+<line x1="10" y1="308" x2="165" y2="308" stroke="#AD1457" stroke-width="1"/>
+<text x="20" y="320" fill="#37474F" font-size="10">+ createList(listType)</text>
+<text x="20" y="332" fill="#37474F" font-size="10">     : IList&lt;T&gt;</text>
+
+<!-- StackFactory → IStack (creates) -->
+<line x1="170" y1="175" x2="330" y2="175" stroke="#AD1457" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#c1dep)"/>
+<text x="249" y="169" text-anchor="middle" fill="#AD1457" font-size="9">«creates»</text>
+
+<!-- StackFactory → ListFactory (delegates) -->
+<line x1="90" y1="208" x2="90" y2="280" stroke="#AD1457" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#c1dep)"/>
+<text x="110" y="248" fill="#AD1457" font-size="9">«delegates»</text>
+
+<!-- ListFactory → IList (creates) -->
+<line x1="165" y1="313" x2="730" y2="313" stroke="#AD1457" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#c1dep)"/>
+<text x="450" y="307" text-anchor="middle" fill="#AD1457" font-size="9">«creates»</text>
+
+<!-- PostfixEvaluator & InfixToPostfix -->
+<rect x="10" y="430" width="155" height="55" rx="4" fill="#E8EAF6" stroke="#3949AB" stroke-width="2"/>
+<text x="87" y="451" text-anchor="middle" fill="#1A237E" font-size="11" font-weight="bold">PostfixEvaluator</text>
+<line x1="10" y1="457" x2="165" y2="457" stroke="#3949AB" stroke-width="1"/>
+<text x="20" y="469" fill="#37474F" font-size="10">- stack: IStack&lt;Double&gt;</text>
+<text x="20" y="481" fill="#37474F" font-size="10">+ evaluate(postfix): double</text>
+
+<rect x="10" y="500" width="155" height="42" rx="4" fill="#E8EAF6" stroke="#3949AB" stroke-width="2"/>
+<text x="87" y="518" text-anchor="middle" fill="#1A237E" font-size="11" font-weight="bold">InfixToPostfix</text>
+<line x1="10" y1="524" x2="165" y2="524" stroke="#3949AB" stroke-width="1"/>
+<text x="20" y="537" fill="#37474F" font-size="10">- stack: IStack&lt;String&gt;  |  + convert(infix): String</text>
+
+<!-- uses IStack -->
+<line x1="165" y1="458" x2="330" y2="220" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#c1uses)"/>
+<text x="245" y="340" fill="#546E7A" font-size="9" transform="rotate(-55,245,340)">«uses IStack»</text>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#1565C0;border:2px solid #0D47A1"></div> Interfaz (IStack / IList)</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#2E7D32;border:2px solid #1B5E20"></div> Clase Abstracta</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#388E3C;border:2px solid #2E7D32"></div> Implementaciones de Pila</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#8E24AA;border:2px solid #6A1B9A"></div> Implementaciones de Lista</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#AD1457;border:2px solid #880E4F"></div> Factory Pattern</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#283593;border:2px solid #1A237E"></div> Evaluador / Conversor</div>
+  <div style="margin-left:10px;color:#546E7A;font-size:11px">
+    ╌╌▷ implements (dashed open triangle) &nbsp;|&nbsp;
+    ╌╌▷ extends &nbsp;|&nbsp;
+    ╌╌› «creates» / «uses» (dashed open arrow)
+  </div>
+</div>
+
+</body>
+</html>
