@@ -9,7 +9,7 @@ public class Main {
         System.out.println("==========================================\n");
 
         // 1. Leer expresión de datos.txt
-        String infix = readFromFile("datos.txt");
+        String infix = readFromFile("src/datos.txt");
         System.out.println("Expresión leída: " + infix + "\n");
 
         // 2. Selección de implementación de pila
