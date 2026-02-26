@@ -1,3 +1,15 @@
+
+import list.IList;
+import list.SinglyLinkedList;
+import list.DoublyLinkedList;
+
+/**
+ * ListFactory - Patrón Factory para seleccionar implementación de Lista.
+ *
+ * Opciones válidas:
+ *   "singly" → SinglyLinkedList
+ *   "doubly"  → DoublyLinkedList
+ */
 public class ListFactory {
 
     public static final String SINGLY = "singly";
